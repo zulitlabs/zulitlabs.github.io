@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ZulitLabs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #06060a;
+    --bg-card: #0f0f16;
+    --bg-card2: #14141e;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.15);
+    --text: #f0f0f8;
+    --text-muted: #8888a8;
+    --text-dim: #55556a;
+    --accent: #7c5cfc;
+    --accent-glow: rgba(124,92,252,0.18);
+    --accent2: #00e5c3;
+    --accent2-glow: rgba(0,229,195,0.12);
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6vw;
+    height: 64px;
+    background: rgba(6,6,10,0.85);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-head);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-muted); font-size: 0.9rem; font-weight: 400;
+    text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--accent); color: #fff;
+    padding: 0.45rem 1.2rem; border-radius: 6px;
+    font-family: var(--font-body); font-size: 0.875rem; font-weight: 500;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity .2s, transform .15s;
+  }
+  .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    padding: 110px 6vw 90px;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent-glow); border: 1px solid rgba(124,92,252,0.3);
+    color: #a990ff; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em;
+    padding: 5px 14px; border-radius: 999px; margin-bottom: 1.4rem;
+    text-transform: uppercase;
+  }
+  .hero-badge::before {
+    content: ''; display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--accent); flex-shrink: 0;
+  }
+  h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+    font-weight: 800; line-height: 1.08; letter-spacing: -0.03em;
+    color: var(--text); margin-bottom: 1.3rem;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub {
+    color: var(--text-muted); font-size: 1.05rem; font-weight: 300;
+    line-height: 1.7; margin-bottom: 2.2rem; max-width: 440px;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 0.72rem 1.7rem; border-radius: var(--radius-sm);
+    font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity .2s, transform .15s; display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--text-muted);
+    padding: 0.72rem 1.4rem; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-hover);
+    font-family: var(--font-body); font-size: 0.95rem; font-weight: 400;
+    text-decoration: none; cursor: pointer;
+    transition: color .2s, border-color .2s, transform .15s; display: inline-block;
+  }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.3); transform: translateY(-1px); }
+
+  /* HERO visual */
+  .hero-visual {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    overflow: hidden;
+  }
+  .hero-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 20%, rgba(124,92,252,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .visual-bar-row { display: flex; flex-direction: column; gap: 0.75rem; }
+  .visual-bar-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .visual-bar-label span:first-child { font-size: 0.78rem; color: var(--text-muted); font-weight: 400; }
+  .visual-bar-label span:last-child { font-size: 0.78rem; color: var(--text-dim); }
+  .bar-track {
+    height: 6px; background: rgba(255,255,255,0.05);
+    border-radius: 99px; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 99px;
+    animation: fillBar 1.2s ease forwards;
+    transform-origin: left;
+  }
+  @keyframes fillBar { from { width: 0 } }
+  .bar-purple { background: var(--accent); }
+  .bar-teal   { background: var(--accent2); }
+  .bar-muted  { background: #4444aa; }
+
+  .visual-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1.4rem;
+  }
+  .stat-box {
+    background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 0.9rem 1rem;
+  }
+  .stat-box .num {
+    font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
+    color: var(--text); letter-spacing: -0.02em;
+  }
+  .stat-box .num .unit { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+  .stat-box .lbl { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+  .accent-num { color: var(--accent) !important; }
+  .accent2-num { color: var(--accent2) !important; }
+
+  /* SECTION WRAPPER */
+  .section { padding: 90px 6vw; max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block; font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.8rem;
+  }
+  h2 {
+    font-family: var(--font-head);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700; letter-spacing: -0.025em;
+    line-height: 1.1; margin-bottom: 1.2rem; color: var(--text);
+  }
+  h2 em { font-style: normal; color: var(--accent); }
+  .section-lead {
+    color: var(--text-muted); font-size: 1.05rem; font-weight: 300;
+    max-width: 560px; line-height: 1.7;
+  }
+
+  /* FEATURES GRID */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem; margin-top: 3.5rem;
+  }
+  .feature-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.6rem;
+    transition: border-color .25s, transform .2s;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: ''; position: absolute;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--accent-glow);
+    top: -20px; right: -20px; pointer-events: none;
+    transition: transform .3s;
+  }
+  .feature-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+  .feature-card:hover::before { transform: scale(1.5); }
+  .feature-icon {
+    width: 40px; height: 40px; border-radius: var(--radius-sm);
+    background: var(--accent-glow); border: 1px solid rgba(124,92,252,0.25);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.1rem; font-size: 1.1rem;
+  }
+  .feature-card h3 {
+    font-family: var(--font-head); font-size: 1rem; font-weight: 600;
+    margin-bottom: 0.5rem; color: var(--text);
+  }
+  .feature-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* DIVIDER */
+  .divider {
+    border: none; border-top: 1px solid var(--border);
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  /* CONTACT */
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .contact-info h2 { margin-bottom: 1rem; }
+  .contact-info p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
+  .contact-detail {
+    display: flex; align-items: center; gap: 0.75rem;
+    color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem;
+  }
+  .contact-detail svg { color: var(--accent); flex-shrink: 0; }
+  .contact-detail a { color: var(--accent2); text-decoration: none; }
+  .contact-detail a:hover { text-decoration: underline; }
+
+  .contact-form {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2.2rem;
+    position: relative; overflow: hidden;
+  }
+  .contact-form::before {
+    content: ''; position: absolute;
+    background: radial-gradient(ellipse at 80% 80%, rgba(0,229,195,0.08) 0%, transparent 60%);
+    inset: 0; pointer-events: none;
+  }
+  .form-group { margin-bottom: 1.2rem; position: relative; }
+  .form-group label {
+    display: block; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.04em;
+    color: var(--text-muted); margin-bottom: 0.45rem; text-transform: uppercase;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; background: var(--bg-card2);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    color: var(--text); font-family: var(--font-body); font-size: 0.925rem;
+    padding: 0.7rem 1rem; outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    appearance: none;
+  }
+  .form-group textarea { min-height: 110px; resize: vertical; }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .btn-submit {
+    width: 100%; background: var(--accent); color: #fff;
+    border: none; border-radius: var(--radius-sm);
+    font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+    padding: 0.85rem; cursor: pointer;
+    transition: opacity .2s, transform .15s;
+    margin-top: 0.4rem;
+  }
+  .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+  .form-success {
+    display: none; text-align: center; padding: 2rem;
+    flex-direction: column; align-items: center; gap: 0.75rem;
+  }
+  .form-success.show { display: flex; }
+  .success-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(0,229,195,0.12); border: 1px solid rgba(0,229,195,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .form-success h3 {
+    font-family: var(--font-head); font-size: 1.15rem; font-weight: 600; color: var(--text);
+  }
+  .form-success p { color: var(--text-muted); font-size: 0.9rem; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 6vw;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer .logo {
+    font-family: var(--font-head); font-size: 1.1rem; font-weight: 800;
+    color: var(--text); text-decoration: none;
+  }
+  footer .logo span { color: var(--accent); }
+  footer p { color: var(--text-dim); font-size: 0.82rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp .7s ease forwards; }
+  .fade-up-d1 { animation-delay: .1s; opacity: 0; }
+  .fade-up-d2 { animation-delay: .22s; opacity: 0; }
+  .fade-up-d3 { animation-delay: .34s; opacity: 0; }
+  .fade-up-d4 { animation-delay: .46s; opacity: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; gap: 2.5rem; padding: 70px 6vw 60px; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Zulit<span>Labs</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section style="background: radial-gradient(ellipse at 30% 0%, rgba(124,92,252,0.10) 0%, transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(0,229,195,0.06) 0%, transparent 50%);">
+  <div class="hero">
+    <div>
+      <div class="hero-badge fade-up">Early Access</div>
+      <h1 class="fade-up fade-up-d1">Building the<br/><em>future</em>, one<br/>lab at a time.</h1>
+      <p class="hero-sub fade-up fade-up-d2">ZulitLabs is where bold ideas become real products. We experiment, iterate, and ship solutions that matter — fast.</p>
+      <div class="hero-actions fade-up fade-up-d3">
+        <a href="#contact" class="btn-primary">Work with us</a>
+        <a href="#features" class="btn-ghost">Learn more</a>
+      </div>
+    </div>
+
+    <div class="hero-visual fade-up fade-up-d4">
+      <p style="font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color: var(--text-dim); margin-bottom: 1.1rem;">Performance overview</p>
+      <div class="visual-bar-row">
+        <div>
+          <div class="visual-bar-label"><span>Product velocity</span><span>94%</span></div>
+          <div class="bar-track"><div class="bar-fill bar-purple" style="width:94%;"></div></div>
+        </div>
+        <div>
+          <div class="visual-bar-label"><span>Client satisfaction</span><span>98%</span></div>
+          <div class="bar-track"><div class="bar-fill bar-teal" style="width:98%;"></div></div>
+        </div>
+        <div>
+          <div class="visual-bar-label"><span>Time to market</span><span>78%</span></div>
+          <div class="bar-track"><div class="bar-fill bar-muted" style="width:78%;"></div></div>
+        </div>
+      </div>
+      <div class="visual-stats">
+        <div class="stat-box">
+          <div class="num accent-num">12<span class="unit">+</span></div>
+          <div class="lbl">Products shipped</div>
+        </div>
+        <div class="stat-box">
+          <div class="num accent2-num">3x<span class="unit"></span></div>
+          <div class="lbl">Faster iteration</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">48<span class="unit">h</span></div>
+          <div class="lbl">Avg. response time</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">100<span class="unit">%</span></div>
+          <div class="lbl">Remote-first team</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div>
+    <span class="section-tag">What we do</span>
+    <h2>Crafted for builders<br/>who move <em>fast</em></h2>
+    <p class="section-lead">From idea to launch, ZulitLabs provides the expertise and momentum you need to build products that actually work.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <h3>Rapid Prototyping</h3>
+      <p>We turn concepts into working prototypes in days, not months — so you can validate faster and waste less.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background: var(--accent2-glow); border-color: rgba(0,229,195,0.2);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <h3>Startup Speed</h3>
+      <p>Agile by default. Every sprint is focused on shipping real value, not meetings about meetings.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Founder-Led Team</h3>
+      <p>You work directly with decision-makers who care about your success as much as their own.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background: var(--accent2-glow); border-color: rgba(0,229,195,0.2);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Data-Driven Iteration</h3>
+      <p>Every decision backed by real signals. We measure what matters and adapt without ego.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      </div>
+      <h3>Full-Stack Execution</h3>
+      <p>Design, engineering, and strategy under one roof. No hand-off friction, just clean delivery.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background: var(--accent2-glow); border-color: rgba(0,229,195,0.2);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 13 19.79 19.79 0 0 1 1.08 4.4 2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+      </div>
+      <h3>Always Reachable</h3>
+      <p>Direct line to the team, always. We're async-first but never unavailable when it counts.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <span class="section-tag">Get in touch</span>
+      <h2>Let's build something<br/><em>great</em> together</h2>
+      <p>Whether you have a project in mind, a question, or just want to explore what's possible — we'd love to hear from you.</p>
+
+      <div class="contact-detail">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span>Reach us at <a href="mailto:founderjoe@zulit.app">founderjoe@zulit.app</a></span>
+      </div>
+      <div class="contact-detail">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Response within 48 hours</span>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div id="formFields">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First name</label>
+            <input type="text" id="fname" placeholder="Joe" required />
+          </div>
+          <div class="form-group">
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" placeholder="you@company.com" required />
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <select id="subject">
+            <option value="">Select a topic…</option>
+            <option>Partnership</option>
+            <option>Project inquiry</option>
+            <option>Investment</option>
+            <option>General question</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell us about your idea or question…" required></textarea>
+        </div>
+        <button class="btn-submit" id="submitBtn" type="button" onclick="submitForm()">Send message</button>
+        <p id="formError" style="display:none; color:#f09595; font-size:0.82rem; margin-top:0.6rem; text-align:center;"></p>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">✓</div>
+        <h3>Message sent!</h3>
+        <p>Thanks for reaching out. Joe will get back to you within 48 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="logo">Zulit<span>Labs</span></a>
+  <p>© 2026 ZulitLabs. All rights reserved.</p>
+</footer>
+
+<script src="submitform.js"></script>
+</body>
+</html>
